@@ -1,18 +1,57 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view/>
+  <Navbar />
+  <router-view />
 </template>
 
+<script>
+import Navbar from './components/Navbar.vue'
+export default {
+  components: { Navbar },
+}
+</script>
+
 <style lang="scss">
+body {
+  background-color: rgb(247, 247, 247);
+  margin: 0;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Roboto, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #000000;
+  margin: 0;
+
+  // Typography
+
+  .title--sm {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  .title--md {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  .title--lg {
+    font-size: 1.75rem;
+    font-weight: 700;
+  }
+  .title--xl {
+    font-size: 2.25rem;
+    font-weight: 700;
+  }
+  .title--nav {
+    text-transform: uppercase;
+    font-weight: 300;
+  }
+  .font-light {
+    font-weight: 300;
+  }
+  .font-heavy {
+    font-weight: 700;
+  }
 }
 
 #nav {
