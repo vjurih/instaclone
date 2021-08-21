@@ -1,12 +1,33 @@
 <template>
-  <Navbar />
+  <NewPostModal
+    v-if="showNewPostModal"
+    :imageURL="imageURL"
+    @clicked-backdrop="toggleModal"
+  />
+  <Navbar @selected-image="handleImageSelect" />
   <router-view />
 </template>
 
 <script>
+import { ref } from '@vue/reactivity'
 import Navbar from './components/Navbar.vue'
+import NewPostModal from './components/NewPostModal.vue'
 export default {
-  components: { Navbar },
+  components: { Navbar, NewPostModal },
+  setup() {
+    const showNewPostModal = ref(false)
+    const imageURL = ref('')
+
+    const toggleModal = () => {
+      showNewPostModal.value = !showNewPostModal.value
+    }
+
+    const handleImageSelect = selected => {
+      imageURL.value = URL.createObjectURL(selected)
+      toggleModal()
+    }
+    return { toggleModal, showNewPostModal, imageURL, handleImageSelect }
+  },
 }
 </script>
 
@@ -51,6 +72,14 @@ body {
   }
   .font-heavy {
     font-weight: 700;
+  }
+  .btn-filled {
+    text-transform: uppercase;
+    color: white;
+    background-color: black;
+    border-radius: 4px;
+    border: none;
+    padding: 10px;
   }
 }
 

@@ -9,7 +9,15 @@
       </div>
       <div class="right-nav">
         <span class="material-icons-outlined">home</span>
-        <span class="material-icons-outlined">control_point</span>
+        <div class="upload-button">
+          <label for="file-upload">
+            <span class="material-icons-outlined">
+              control_point
+            </span>
+          </label>
+          <input type="file" id="file-upload" @change="handleChange" />
+        </div>
+
         <span class="material-icons-outlined">bookmark_border</span>
         <span class="material-icons-outlined">account_circle</span>
       </div>
@@ -18,10 +26,18 @@
 </template>
 
 <script>
-export default {}
+export default {
+  setup(props, { emit }) {
+    const handleChange = e => {
+      const selected = e.target.files[0]
+      emit('selected-image', selected)
+    }
+    return { handleChange }
+  },
+}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .nav {
   display: flex;
   flex-direction: row;
@@ -44,5 +60,9 @@ export default {}
     font-size: 32px;
     padding: 5px 8px;
   }
+}
+
+input[type='file'] {
+  display: none;
 }
 </style>
