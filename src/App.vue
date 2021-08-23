@@ -14,19 +14,20 @@ import Navbar from './components/Navbar.vue'
 import NewPostModal from './components/NewPostModal.vue'
 export default {
   components: { Navbar, NewPostModal },
-  setup() {
-    const showNewPostModal = ref(false)
-    const imageURL = ref('')
-
-    const toggleModal = () => {
-      showNewPostModal.value = !showNewPostModal.value
+  data() {
+    return {
+      showNewPostModal: false,
+      imageUrl: '',
     }
-
-    const handleImageSelect = selected => {
-      imageURL.value = URL.createObjectURL(selected)
+  },
+  methods: {
+    toggleModal() {
+      showNewPostModal = !showNewPostModal
+    },
+    handleImageSelect(selected) {
+      imageURL = URL.createObjectURL(selected)
       toggleModal()
-    }
-    return { toggleModal, showNewPostModal, imageURL, handleImageSelect }
+    },
   },
 }
 </script>

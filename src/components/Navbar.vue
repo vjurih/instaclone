@@ -27,12 +27,11 @@
 
 <script>
 export default {
-  setup(props, { emit }) {
-    const handleChange = e => {
+  methods: {
+    handleChange(e) {
       const selected = e.target.files[0]
-      emit('selected-image', selected)
-    }
-    return { handleChange }
+      this.$emit('selected-image', selected)
+    },
   },
 }
 </script>

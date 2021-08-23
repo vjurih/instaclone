@@ -16,11 +16,10 @@
 <script>
 export default {
   props: ['imageURL'],
-  setup(props, { emit }) {
-    const handleBackdropClick = () => {
-      emit('clicked-backdrop')
-    }
-    return { handleBackdropClick }
+  methods: {
+    handleBackdropClick() {
+      this.$emit('clicked-backdrop')
+    },
   },
 }
 </script>
