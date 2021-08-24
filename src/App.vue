@@ -1,7 +1,7 @@
 <template>
   <NewPostModal
     v-if="showNewPostModal"
-    :imageURL="imageURL"
+    :imageFile="file"
     @clicked-backdrop="toggleModal"
   />
   <Navbar @selected-image="handleImageSelect" />
@@ -17,18 +17,20 @@ export default {
   setup() {
     // DATA
     const showNewPostModal = ref(false)
-    const imageURL = ref(null)
+    const file = ref(null)
 
     // METHODS
     const toggleModal = () => {
       showNewPostModal.value = !showNewPostModal.value
     }
     const handleImageSelect = (selected) => {
-      imageURL.value = URL.createObjectURL(selected)
-      toggleModal()
+      file.value = selected
+      if (file.value) {
+        toggleModal()
+      }
     }
 
-    return { showNewPostModal, handleImageSelect, imageURL, toggleModal }
+    return { showNewPostModal, handleImageSelect, file, toggleModal }
   },
 }
 </script>

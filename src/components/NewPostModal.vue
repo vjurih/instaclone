@@ -2,7 +2,9 @@
   <div class="modal-backdrop" @click.self="handleBackdropClick">
     <div class="modal">
       <form @submit.prevent="handleSubmit">
-        <div class="form-left"><img :src="imageURL" /></div>
+        <div class="form-left">
+          <img :src="imageSrc" />
+        </div>
         <div class="form-right">
           <label>Description</label>
           <textarea v-model="description"></textarea>
@@ -18,38 +20,49 @@
 import { ref } from '@vue/reactivity'
 import useCollection from '../composables/useCollection'
 import { timestamp } from '../firebase/config'
+import useStorage from '../composables/useStorage'
+import getUser from '../composables/getUser'
 
 export default {
-  props: ['imageURL'],
+  props: ['imageFile'],
   setup(props, { emit }) {
     // DATA
     const { error, isPending, addDoc } = useCollection('posts')
     const description = ref('')
+    const { url, filePath, uploadImage } = useStorage()
+    const { user } = getUser()
+    const imageSrc = URL.createObjectURL(props.imageFile)
 
     // METHODS
     const handleBackdropClick = () => {
       emit('clicked-backdrop')
     }
-    const handleSubmit = async () => {
-      if (props.imageURL) {
+    const handleSubmit = async function() {
+      if (props.imageFile) {
         isPending.value = true
+        await uploadImage(props.imageFile)
         await addDoc({
           description: description.value,
+          filePath: filePath.value,
+          imageURL: url.value,
           createdAt: timestamp(),
+          userId: user.value.uid,
+          userName: user.value.displayName,
         })
         isPending.value = false
         if (!error.value) {
           emit('clicked-backdrop')
+        } else {
+          console.log(error.value)
         }
       }
     }
 
     return {
-      // DATA
       isPending,
       description,
-
-      // METHODS
+      url,
+      imageSrc,
       handleBackdropClick,
       handleSubmit,
     }
