@@ -3,11 +3,10 @@
     <div class="post-header">
       <div class="left-user">
         <div class="post-avatar">
-          <img src="http://placekitten.com/120/120" />
+          <img src="https://via.placeholder.com/120" />
         </div>
         <div class="post-userinfo">
-          <div class="post-username font-heavy">sydwn</div>
-          <!-- <div class="post-location">Montréal, QC</div> -->
+          <div class="post-username font-heavy">{{ data.displayName }}</div>
         </div>
       </div>
 
@@ -15,7 +14,7 @@
         <span class="material-icons-outlined">more_horiz</span>
       </div>
     </div>
-    <div class="post-image"><img src="http://placekitten.com/2000/2000" /></div>
+    <div class="post-image"><img :src="data.imageURL" /></div>
     <div class="post-bottom">
       <div class="post-actions">
         <div class="actions-left">
@@ -31,23 +30,22 @@
       </div>
       <div class="post-likesliste"></div>
       <div class="post-description">
-        <span class="font-heavy">the_cool_guy</span>
-        <span>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-          minima ea, beatae similique blanditiis harum, vero eligendi aut, nemo
-          ex repellat tempore voluptatum! Hic reiciendis obcaecati quasi placeat
-          odio porro!
+        <span class="font-heavy">{{ data.displayName }}</span>
+        <span class="post-description-content">
+          {{ data.description }}
         </span>
       </div>
       <div class="post-commentslist"></div>
-      <div class="post-time">7 hours ago</div>
+      <div class="post-time">{{ data.createdAt }} ago</div>
       <div class="post-publishcomment"></div>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  props: ['data'],
+}
 </script>
 
 <style lang="scss">
@@ -62,19 +60,16 @@ export default {}
     border: 1px solid lightgray;
   }
 }
-
 .left-user {
   display: flex;
   flex-direction: row;
 }
-
 .post-wrapper {
   max-width: 600px;
-  margin: 0 auto;
+  margin: 20px auto;
   border: 1px solid lightgray;
   border-radius: 4px;
 }
-
 .post-header {
   display: flex;
   justify-content: space-between;
@@ -82,7 +77,6 @@ export default {}
   padding: 15px 20px;
   border-radius: 4px;
 }
-
 .post-image {
   width: 100%;
   overflow: hidden;
@@ -90,13 +84,11 @@ export default {}
     width: 100%;
   }
 }
-
 .post-actions {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-
 .actions-left,
 .actions-right {
   display: flex;
@@ -114,7 +106,6 @@ export default {}
     padding-right: 0;
   }
 }
-
 .post-userinfo,
 .post-options {
   display: flex;
@@ -132,16 +123,16 @@ export default {}
     font-size: 28px;
   }
 }
-
 .post-description {
   text-align: left;
   margin-top: 10px;
+  &-content {
+    margin-left: 5px;
+  }
 }
-
 .post-bottom {
   margin: 10px 20px 20px 20px;
 }
-
 .post-time {
   text-transform: uppercase;
   color: darkgray;
@@ -149,7 +140,6 @@ export default {}
   display: flex;
   margin: 20px 0;
 }
-
 .right-nav {
   span:last-child {
     padding-right: 0;

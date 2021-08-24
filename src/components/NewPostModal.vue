@@ -47,7 +47,7 @@ export default {
           imageURL: url.value,
           createdAt: timestamp(),
           userId: user.value.uid,
-          userName: user.value.displayName,
+          displayName: user.value.displayName,
         })
         isPending.value = false
         if (!error.value) {
