@@ -7,12 +7,13 @@ import Signup from '../views/Signup.vue'
 import { projectAuth } from '../firebase/config'
 
 const requireAuth = function(to, from, next) {
-  let user = projectAuth.currentUser
-  if (!user) {
-    next({ name: 'Login' })
-  } else {
-    next()
-  }
+  let user = projectAuth.onAuthStateChanged((user) => {
+    if (!user) {
+      next({ name: 'Login' })
+    } else {
+      next()
+    }
+  })
 }
 
 const routes = [
