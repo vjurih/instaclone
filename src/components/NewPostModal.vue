@@ -1,12 +1,13 @@
 <template>
   <div class="modal-backdrop" @click.self="handleBackdropClick">
     <div class="modal">
-      <form>
+      <form @submit.prevent="handleSubmit">
         <div class="form-left"><img :src="imageURL" /></div>
         <div class="form-right">
           <label>Description</label>
-          <textarea></textarea>
-          <button class="btn-filled">Publish</button>
+          <textarea v-model="description"></textarea>
+          <button class="btn-filled" v-if="!isPending">Publish</button>
+          <button class="btn-filled" v-else>Uploading...</button>
         </div>
       </form>
     </div>
@@ -14,12 +15,44 @@
 </template>
 
 <script>
+import { ref } from '@vue/reactivity'
+import useCollection from '../composables/useCollection'
+import { timestamp } from '../firebase/config'
+
 export default {
   props: ['imageURL'],
-  methods: {
-    handleBackdropClick() {
-      this.$emit('clicked-backdrop')
-    },
+  setup(props, { emit }) {
+    // DATA
+    const { error, isPending, addDoc } = useCollection('posts')
+    const description = ref('')
+
+    // METHODS
+    const handleBackdropClick = () => {
+      emit('clicked-backdrop')
+    }
+    const handleSubmit = async () => {
+      if (props.imageURL) {
+        isPending.value = true
+        await addDoc({
+          description: description.value,
+          createdAt: timestamp(),
+        })
+        isPending.value = false
+        if (!error.value) {
+          emit('clicked-backdrop')
+        }
+      }
+    }
+
+    return {
+      // DATA
+      isPending,
+      description,
+
+      // METHODS
+      handleBackdropClick,
+      handleSubmit,
+    }
   },
 }
 </script>

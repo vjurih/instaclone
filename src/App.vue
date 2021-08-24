@@ -14,20 +14,21 @@ import Navbar from './components/Navbar.vue'
 import NewPostModal from './components/NewPostModal.vue'
 export default {
   components: { Navbar, NewPostModal },
-  data() {
-    return {
-      showNewPostModal: false,
-      imageUrl: '',
+  setup() {
+    // DATA
+    const showNewPostModal = ref(false)
+    const imageURL = ref(null)
+
+    // METHODS
+    const toggleModal = () => {
+      showNewPostModal.value = !showNewPostModal.value
     }
-  },
-  methods: {
-    toggleModal() {
-      showNewPostModal = !showNewPostModal
-    },
-    handleImageSelect(selected) {
-      imageURL = URL.createObjectURL(selected)
+    const handleImageSelect = (selected) => {
+      imageURL.value = URL.createObjectURL(selected)
       toggleModal()
-    },
+    }
+
+    return { showNewPostModal, handleImageSelect, imageURL, toggleModal }
   },
 }
 </script>
@@ -74,13 +75,31 @@ body {
   .font-heavy {
     font-weight: 700;
   }
-  .btn-filled {
+  .error {
+    color: red;
+    margin: 20px 0;
+  }
+  .pointer {
+    cursor: pointer;
+  }
+  .btn {
     text-transform: uppercase;
-    color: white;
-    background-color: black;
-    border-radius: 4px;
-    border: none;
     padding: 10px;
+    border-radius: 4px;
+    margin: 4px;
+    &-filled {
+      @extend .btn;
+      color: white;
+      background-color: black;
+      border: none;
+    }
+    &-outlined {
+      @extend .btn;
+      border: 2px solid black;
+      color: black;
+      background-color: transparent;
+      padding: 8px;
+    }
   }
 }
 
