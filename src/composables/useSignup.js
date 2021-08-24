@@ -4,7 +4,7 @@ import { projectAuth } from '../firebase/config'
 const error = ref(null)
 const isPending = ref(false)
 
-const signup = async (email, password, displayName) => {
+const signup = async (email, password, userName) => {
   error.value = null
   isPending.value = true
 
@@ -16,7 +16,7 @@ const signup = async (email, password, displayName) => {
     if (!res) {
       throw new Error('Could not complete signup')
     }
-    await res.user.updateProfile({ displayName })
+    await res.user.updateProfile({ userName })
     error.value = null
     isPending.value = false
     return res

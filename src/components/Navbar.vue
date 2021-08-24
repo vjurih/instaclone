@@ -26,9 +26,11 @@
           bookmark_border
         </span>
 
-        <span class="material-icons-outlined" @click="handleLogOut">
-          account_circle
-        </span>
+        <router-link :to="{ name: 'User', params: { userName } }">
+          <span class="material-icons-outlined">
+            account_circle
+          </span>
+        </router-link>
       </div>
 
       <div class="logged-out" v-else>
@@ -47,6 +49,8 @@
 import getUser from '../composables/getUser'
 import useLogout from '../composables/useLogout'
 import { useRouter } from 'vue-router'
+import { projectAuth } from '../firebase/config'
+import { computed, ref } from '@vue/reactivity'
 
 export default {
   setup(props, { emit }) {
@@ -54,6 +58,7 @@ export default {
     const { user } = getUser()
     const { error, isPending, logout } = useLogout()
     const router = useRouter()
+    const userName = user.value.userName
 
     // METHODS
     const handleChange = function(e) {
@@ -69,7 +74,8 @@ export default {
         console.log(error.value)
       }
     }
-    return { handleChange, user, handleLogOut }
+
+    return { handleChange, user, userName, handleLogOut }
   },
 }
 </script>

@@ -2,12 +2,13 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
+import User from '../views/User.vue'
 
 // Route guard
 import { projectAuth } from '../firebase/config'
 
 const requireAuth = function(to, from, next) {
-  let user = projectAuth.onAuthStateChanged((user) => {
+  projectAuth.onAuthStateChanged((user) => {
     if (!user) {
       next({ name: 'Login' })
     } else {
@@ -32,6 +33,12 @@ const routes = [
     path: '/signup',
     name: 'Signup',
     component: Signup,
+  },
+  {
+    path: '/users/:userName',
+    name: 'User',
+    component: User,
+    beforeEnter: requireAuth,
   },
 ]
 
