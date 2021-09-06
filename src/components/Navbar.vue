@@ -3,8 +3,10 @@
     <nav class="nav">
       <div class="left-nav">
         <h1 class="title--nav">
-          <span>Insta</span>
-          <span class="font-heavy">clone</span>
+          <router-link :to="{ name: 'Home' }">
+            <span>Insta</span>
+            <span class="font-heavy">clone</span>
+          </router-link>
         </h1>
       </div>
 
@@ -15,20 +17,16 @@
 
         <div class="upload-button">
           <label for="file-upload">
-            <span class="material-icons-outlined">
-              control_point
-            </span>
+            <span class="material-icons-outlined">control_point</span>
           </label>
           <input type="file" id="file-upload" @change="handleChange" />
         </div>
 
-        <span class="material-icons-outlined">
-          bookmark_border
-        </span>
-        <router-link :to="{ name: 'User', params: { displayName } }">
-          <span class="material-icons-outlined">
-            account_circle
-          </span>
+        <span class="material-icons-outlined">bookmark_border</span>
+        <router-link
+          :to="{ name: 'User', params: { displayName: user.displayName } }"
+        >
+          <span class="material-icons-outlined">account_circle</span>
         </router-link>
         <span class="material-icons-outlined" @click="handleLogOut">
           logout
@@ -37,10 +35,10 @@
 
       <div class="logged-out" v-else>
         <router-link :to="{ name: 'Signup' }">
-          <button class="btn-filled">Sign up</button>
+          <button class="btn-filled pointer">Sign up</button>
         </router-link>
         <router-link :to="{ name: 'Login' }">
-          <button class="btn-outlined">Log in</button>
+          <button class="btn-outlined pointer">Log in</button>
         </router-link>
       </div>
     </nav>
@@ -48,7 +46,6 @@
 </template>
 
 <script>
-import getUser from '../composables/getUser'
 import useLogout from '../composables/useLogout'
 import { useRouter } from 'vue-router'
 import { projectAuth } from '../firebase/config'
@@ -57,13 +54,12 @@ import { ref } from '@vue/reactivity'
 export default {
   setup(props, { emit }) {
     //DATA
-    const { user } = getUser()
+    const user = ref(null)
     const { error, isPending, logout } = useLogout()
     const router = useRouter()
-    const displayName = ref(null)
 
     projectAuth.onAuthStateChanged((_user) => {
-      displayName.value = _user.displayName
+      user.value = _user
     })
 
     // METHODS
@@ -72,15 +68,15 @@ export default {
       emit('selected-image', selected)
     }
     const handleLogOut = async function() {
-      const res = await logout()
-      if (!error.value) {
+      let res = null
+      try {
+        res = await logout()
         router.push({ name: 'Login' })
-        console.log('User logged out')
-      } else {
-        console.log(error.value)
+      } catch (err) {
+        console.log(err)
       }
     }
-    return { handleChange, user, displayName, handleLogOut }
+    return { handleChange, user, handleLogOut }
   },
 }
 </script>
@@ -115,6 +111,10 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.title--nav a {
+  text-decoration: none;
 }
 
 input[type='file'] {

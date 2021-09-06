@@ -2,9 +2,9 @@
   <div class="post-wrapper">
     <div class="post-header">
       <div class="left-user">
-        <div class="post-avatar">
+        <!-- <div class="post-avatar">
           <img src="https://via.placeholder.com/120" />
-        </div>
+        </div> -->
         <div class="post-userinfo">
           <div class="post-username font-heavy">{{ data.displayName }}</div>
         </div>
