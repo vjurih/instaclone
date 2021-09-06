@@ -13,7 +13,11 @@ const getCollection = function(collection, filter = 'all') {
   } else {
     collectionRef = projectFirestore
       .collection(collection)
+<<<<<<< HEAD
       .where('userName', '==', filter.userName)
+=======
+      .where('displayName', '==', filter.displayName)
+>>>>>>> bug-fix
       .orderBy('createdAt', 'desc')
   }
 

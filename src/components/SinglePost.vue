@@ -2,6 +2,7 @@
   <div class="post-wrapper">
     <div class="post-header">
       <div class="left-user">
+<<<<<<< HEAD
         <div class="post-avatar">
           <img src="https://via.placeholder.com/120" />
         </div>
@@ -9,6 +10,13 @@
           <router-link :to="{ name: 'User', params: { userName } }">
             <div class="post-username font-heavy">{{ userName }}</div>
           </router-link>
+=======
+        <!-- <div class="post-avatar">
+          <img src="https://via.placeholder.com/120" />
+        </div> -->
+        <div class="post-userinfo">
+          <div class="post-username font-heavy">{{ data.displayName }}</div>
+>>>>>>> bug-fix
         </div>
       </div>
 
@@ -32,7 +40,11 @@
       </div>
       <div class="post-likesliste"></div>
       <div class="post-description">
+<<<<<<< HEAD
         <span class="font-heavy">{{ userName }}</span>
+=======
+        <span class="font-heavy">{{ data.displayName }}</span>
+>>>>>>> bug-fix
         <span class="post-description-content">
           {{ data.description }}
         </span>
@@ -47,11 +59,14 @@
 <script>
 export default {
   props: ['data'],
+<<<<<<< HEAD
   setup(props) {
     const userName = props.data.userName
 
     return { username }
   },
+=======
+>>>>>>> bug-fix
 }
 </script>
 
@@ -67,19 +82,16 @@ export default {
     border: 1px solid lightgray;
   }
 }
-
 .left-user {
   display: flex;
   flex-direction: row;
 }
-
 .post-wrapper {
   max-width: 600px;
   margin: 20px auto;
   border: 1px solid lightgray;
   border-radius: 4px;
 }
-
 .post-header {
   display: flex;
   justify-content: space-between;
@@ -87,7 +99,6 @@ export default {
   padding: 15px 20px;
   border-radius: 4px;
 }
-
 .post-image {
   width: 100%;
   overflow: hidden;
@@ -95,13 +106,11 @@ export default {
     width: 100%;
   }
 }
-
 .post-actions {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-
 .actions-left,
 .actions-right {
   display: flex;
@@ -119,7 +128,6 @@ export default {
     padding-right: 0;
   }
 }
-
 .post-userinfo,
 .post-options {
   display: flex;
@@ -137,7 +145,6 @@ export default {
     font-size: 28px;
   }
 }
-
 .post-description {
   text-align: left;
   margin-top: 10px;
@@ -145,11 +152,9 @@ export default {
     margin-left: 5px;
   }
 }
-
 .post-bottom {
   margin: 10px 20px 20px 20px;
 }
-
 .post-time {
   text-transform: uppercase;
   color: darkgray;
@@ -157,7 +162,6 @@ export default {
   display: flex;
   margin: 20px 0;
 }
-
 .right-nav {
   span:last-child {
     padding-right: 0;

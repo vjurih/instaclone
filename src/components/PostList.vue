@@ -23,7 +23,10 @@ export default {
         })
       }
     })
+<<<<<<< HEAD
 
+=======
+>>>>>>> bug-fix
     return { error, documents, formattedDocuments }
   },
 }
